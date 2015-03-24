@@ -1,0 +1,15 @@
+#!/bin/bash
+cd `dirname $0`
+
+source ../vcell.cfg
+
+cat > /opt/zkclient/share/zkclient.xml << EOF
+<?xml version="1.0"?>
+<zkclient>
+  <logger path="/opt/zkclient/share/zkclient.properties"/>
+  <zookeeper_server host="$zkip"/>
+  <zookeeper_pm prefix="/cloudview/CVM/PM/by-UUID/"/>
+  <zookeeper_vm prefix="/cloudview/CVM/VM/by-UUID/"/>
+
+</zkclient>
+EOF

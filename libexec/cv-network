@@ -1,0 +1,18 @@
+#!/bin/bash
+cd `dirname $0`
+
+source ../vcell.cfg
+
+cat > /usr/local/etc/devagent/vlan-conf << EOF
+mgmt : $mgmt_vlan
+biz : $biz_vlan
+stor : $stor_vlan
+EOF
+
+cat > /usr/local/etc/devagent/nic-conf << EOF
+mgmt : $mgmt
+biz : $biz
+stor : $stor
+EOF
+
+

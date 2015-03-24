@@ -1,0 +1,16 @@
+#!/bin/bash
+cd `dirname $0`
+
+source ../vcell.cfg
+
+cat > /opt/collect-agent/etc/collector/conf/mq_prop.properties << EOF
+#Created by JInto - www.guh-software.de
+#Fri Dec 27 15:08:04 CST 2013
+ManagerMQ=tcp\://$cvmip\:61619
+EOF
+cat > /opt/collect-agent/etc/collector/conf/agent_prop.properties << EOF
+SERVER_IP=$cvmip
+SERVER_PORT=9090
+SERVER_PROTOCAL=http
+SEND_DATA_SERVICE=sendCollectData
+EOF

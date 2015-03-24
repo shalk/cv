@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+cd `dirname $0`
+
+cv(){
+  local arg_name=$1 
+  bash ./libexec/cv-$arg_name
+}
+if [[ $# == 0 ]]
+then
+    cv usage  | less 
+    exit 1
+fi
+
+
+var=$1
+shift
+if [[ !  -f "./libexec/cv-$1" ]]
+then
+    cv usage  | less
+    exit 1
+fi
+cv $1

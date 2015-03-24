@@ -1,0 +1,17 @@
+#!/bin/bash
+
+declare -a service=('host-agent','devagentd','storage-agent','zkclient','collet-agent','ntp')
+
+for i in ${service[@]}
+do
+    chkconfig $i on
+#    /etc/init.d/$i start    
+    /etc/init.d/$i status
+    if [[ $? != 0 ]]
+    then
+        echo "$i status is not ok"
+    fi
+done
+
+
+
