@@ -1,9 +1,15 @@
 #!/usr/bin/env bash
 
 tmppwd=`pwd`
-cd $(dirname $(readlink $0))
 
-_cv(){
+if [[ -L $0 ]]
+then
+    cd $(dirname $(readlink $0))
+else
+    cd $(dirname $0)
+fi
+
+cv_command(){
   local arg_name=$1 
   shift  
   ./libexec/cv-$arg_name "$@"
@@ -11,7 +17,7 @@ _cv(){
 
 if [[ $# == 0 ]]
 then
-    _cv usage  | less 
+    cv_command usage  | less 
     exit 1
 fi
 
@@ -19,10 +25,10 @@ fi
 var=$1
 if [[ !  -f "./libexec/cv-$var" ]]
 then
-    _cv usage  | less
+    cv_command usage  | less
     exit 1
 fi
 
-_cv "$@"
+cv_command  "$@"
 
 cd $tmppwd

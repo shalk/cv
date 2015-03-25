@@ -19,6 +19,7 @@ Command:
 
     storage : 
     usage   : display usage
+    version : display version
 
 
 COPYRIGHT
