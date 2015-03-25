@@ -1,0 +1,35 @@
+#!/usr/bin/env perl
+# Summary  : check parameter for each module
+#
+
+sub cv_network_vlan{
+    my $vlan = shift;
+    my $ret = 1;
+    $ret = 0  if $vlan >= 0 && $vlan < 4096;
+    return $ret;
+}
+sub cv_network_nic{
+    my $nic = shift;
+    my $ret = 1 ;
+    my @nic_list = `ls /sys/class/net/`;
+    foreach my $i  (@nic_list) {
+        chomp $i;
+        $ret = 0 if $nic eq $i;
+    }
+    return $ret 
+}
+sub cv_network_br{
+}
+sub cv_service_name{
+}
+sub cv_service_status{
+}
+sub cv_host_cvmip{
+}
+sub cv_zk_zkip{
+}
+sub cv_zk_ntpip{
+}
+
+
+

@@ -2,6 +2,14 @@
 cd `dirname $0`
 
 source ../vcell.cfg
+source ./function
+tmpip=$1
+cv_check_ip $tmpip
+
+if [ X"$1" != X"" ] &&  cv_check_ip "$tmpip" 
+then
+    cvmip=$tmpip
+fi
 
 cat > /opt/collect-agent/etc/collector/conf/mq_prop.properties << EOF
 #Created by JInto - www.guh-software.de

@@ -1,0 +1,52 @@
+#!/usr/bin/env bash
+# 
+# Summary: configure vcell or cvm 
+# 
+# Usage: cv  setup [vcell | cvm ] 
+#   
+#       Option:
+#        vcell  :        configure host/network/zk/ntp/service for vcell 
+#        cvm    :        configure network/zk/storage/service for cvm
+#
+cd `dirname $0`
+
+source ../vcell.cfg
+source ./function
+
+cv_setup_vcell () {
+  cv host    
+  cv service host-agent restart
+  cv network 
+  cv zk 
+  cv service zkclient restart
+  cv ntp
+  cv service cron restart
+  cv service devagent restart
+  sleep 3
+  cv service 
+}
+cv_setup_cvm(){
+    echo
+}
+
+arg=$1
+
+case $arg in 
+    cvm)
+     cv_setup_cvm 
+    ;;
+    vcell)
+     cv_setup_vcell
+     ;;
+     *)
+     echo "
+Usage: cv  setup [vcell | cvm ] 
+     
+    Option:
+          vcell  :        configure host/network/zk/ntp/service for vcell 
+          cvm    :        configure network/zk/storage/service for cvm
+          "
+     ;;
+esac
+
+

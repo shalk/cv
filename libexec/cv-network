@@ -2,6 +2,8 @@
 cd `dirname $0`
 
 source ../vcell.cfg
+source ./function
+
 
 cat > /usr/local/etc/devagent/vlan-conf << EOF
 mgmt : $mgmt_vlan

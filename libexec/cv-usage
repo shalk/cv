@@ -9,12 +9,16 @@ Usage:
     cv <Command>  <Option>
 
 Command:
-    network : configure vlan-conf and nic-conf
+    setup   : setup cvm and vcell
+
     zk      : configure zkclient.xml
+    ntp     : configure crontab for time sync
     host    : configure mq_prop.properties and agent_prop.properties
+    network : configure vlan-conf and nic-conf
+    service : check service status( host-agent,devagentd ,storage-agent,zkclient,collet-agent,ntp)
+
     storage : 
-    service : check service  status , host-agent,devagentd ,storage-agent,zkclient,collet-agent,ntp
-    vcell     : complete all configure with vcell.cfg  
+    usage   : display usage
 
 
 COPYRIGHT

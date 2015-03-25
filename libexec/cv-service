@@ -1,0 +1,52 @@
+#!/bin/bash
+# 
+# Summary: control service 
+# 
+# Usage: cv  service  <servicename> <state>
+#   
+#        default value: 
+#        servicename :        include 5 services , host-agent,devagentd ,storage-agent ,collect-agent,cron 
+#        state       :        {start|stop|restart|status|on}
+
+cd `dirname $0`
+mode="all"
+state="status"
+
+if [[ X"$1" != X"" ]]
+then
+   service=$1
+   mode="single"
+   if [[ X$2 != X"" ]]
+   then
+       state=$2
+   fi
+else
+   declare -a service=('host-agent' 'devagentd' 'storage-agent' 'zkclient' 'collect-agent' 'cron')
+fi
+if [[ X"$mode" == X"all" ]]
+then 
+    for i in ${service[@]}
+    do
+        echo $i
+        chkconfig $i on
+        /etc/init.d/$i $state
+        if [[ $? != 0 ]]
+        then
+            echo "$i status is not ok" >&2
+        fi
+    done
+else
+    if [[ X"$state" ==  X"on" ]]
+    then 
+        chkconfig $service on 
+    else
+        /etc/init.d/$service $state
+        if [[ $? != 0 ]]
+        then
+            echo "$service  status is not ok" >&2
+        fi
+    fi
+fi
+
+
+

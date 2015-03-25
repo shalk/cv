@@ -1,0 +1,25 @@
+#!/bin/bash
+cd `dirname $0`
+
+source ../vcell.cfg
+source ./function
+old /etc/crontab
+tmpip=$1
+cv_check_ip $tmpip
+
+if [ X"$1" != X"" ] &&  cv_check_ip "$tmpip" 
+then
+    ntpip=$tmpip
+fi
+echo $ntpip
+cat > /etc/contab << EOF
+SHELL=/bin/sh
+PATH=/usr/bin:/usr/sbin:/sbin:/bin:/usr/lib/news/bin
+MAILTO=root
+#
+# check scripts in cron.hourly, cron.daily, cron.weekly, and cron.monthly
+#
+-*/15 * * * *   root  test -x /usr/lib/cron/run-crons && /usr/lib/cron/run-crons >/dev/null 2>&1
+0 0-23/1 * * *  root  /usr/sbin/sntp -P no -r $ntpip; /sbin/hwclock -w >& /dev/null
+
+EOF
