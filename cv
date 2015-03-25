@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 tmppwd=`pwd`
-cd `dirname $0`
+cd $(dirname $(readlink $0))
 
 _cv(){
   local arg_name=$1 
