@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+cd `dirname $0 `
+source ./function 
+vim ../vcell.cfg
+
+cv_log "vcell.cfg finish"
+
+

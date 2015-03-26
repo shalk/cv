@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+
+cd `dirname $0`
+
+echo "
+#USER GUIDE#
+step1:
+    /etc/init.d/o2cb configure
+
+step2:
+    o2cb add-cluster ocfs2
+
+step3:
+    Please check /etc/hosts and hostname
+    o2cb add-node --ip 192.168.199.1 --number 0 ocfs2 node1
+    o2cb add-node --ip 192.168.199.2 --number 1 ocfs2 node2
+
+step4:
+    mkfs.ocfs2 -b 4K -C 4K -J size=4M -N 4 -L cluster_heart --cluster-name=ocfs2 --cluster-stack=o2cb --global-heartbeat /dev/sdb
+
+step5:
+    mounted.ocfs2 -d
+
+step6:
+    o2cb add-heartbeat ocfs2 244A6AAAE77F4053803734530FC4E0B7
+
+step7:
+    o2cb heartbeat-mode ocfs2 global
+
+step8:
+    /etc/init.d/o2cb enable
+    o2cb cluster-status
+
+step9:
+    scp /etc/ocfs2/cluster.conf node2:/ect/ocfs2/
+
+step10 on every node: 
+    /etc/init.d/o2cb enable 
+
+step11 on every node:
+    /etc/init.d/o2cb status
+
+step12 
+    mkfs.ocfs2 -T vmstore /dev/mapper/data
+
+"
+

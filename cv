@@ -9,6 +9,14 @@ else
     cd $(dirname $0)
 fi
 
+if [ !  -f /opt/cv/vcell.cfg ] && [ ! -f vcell.cfg ]
+then
+    echo "/opt/cv/vcell.cfg is not exists!"
+    exit 1
+fi
+dos2unix /opt/cv/vcell.cfg >& /dev/null
+
+
 cv_command(){
   local arg_name=$1 
   shift  

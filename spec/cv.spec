@@ -1,7 +1,7 @@
 Summary:    cloudview configure tool 
 Name:       cv
 Version:    1.0
-Release:    1
+Release:    20150326
 License:    GPL
 Packager:   shalk
 Source:     cv-1.0.tar.gz
@@ -13,16 +13,17 @@ Autoreq:    0
 %description
 This is  cloudview configure tool  rpm package for cloudview 1.8    
 %prep
-%setup -q
+%setup -q cv
 %build
 %install
 mkdir -p %{buildroot}/opt/cv/
 cp -dpr * %{buildroot}/opt/cv/
-read -n2 -p nihao
 
 %files
 %defattr(-,root,root,-)
 /opt/cv/*
 %post
-rm /usr/local/bin/cv   
+rm /usr/local/bin/cv  >& /dev/null 
 ln -s   /opt/cv/cv /usr/local/bin/cv 
+mkdir -p /cloudview/cv/spool/import
+mkdir -p /cloudview/cv/spool/iso

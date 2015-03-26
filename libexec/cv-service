@@ -9,6 +9,8 @@
 #        state       :        {start|stop|restart|status|on}
 
 cd `dirname $0`
+source ./function 
+
 mode="all"
 state="status"
 
@@ -27,12 +29,12 @@ if [[ X"$mode" == X"all" ]]
 then 
     for i in ${service[@]}
     do
-        echo $i
+        cv_log "service $i status" 
         chkconfig $i on
         /etc/init.d/$i $state
         if [[ $? != 0 ]]
         then
-            echo "$i status is not ok" >&2
+            echo "$i $state is not ok" >&2
         fi
     done
 else
@@ -43,7 +45,7 @@ else
         /etc/init.d/$service $state
         if [[ $? != 0 ]]
         then
-            echo "$service  status is not ok" >&2
+            echo "$service  $state is not ok" >&2
         fi
     fi
 fi

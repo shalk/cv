@@ -8,6 +8,10 @@ Usage:
     cv -h|-help|--help
     cv <Command>  <Option>
 
+Example:
+    cv setup vcell
+    cv setup cvm
+
 Command:
     setup   : setup cvm and vcell
 

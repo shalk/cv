@@ -17,4 +17,8 @@ biz : $biz
 stor : $stor
 EOF
 
+if [ X"$1" == X"init" ]
+then
+    ../other/hyper_init_net.py &
+fi
 

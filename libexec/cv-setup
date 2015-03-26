@@ -14,19 +14,25 @@ source ../vcell.cfg
 source ./function
 
 cv_setup_vcell () {
+  cv_log "configure host"
   cv host    
   cv service host-agent restart
+  cv_log "configure network"
   cv network 
+  cv_log "configure zk"
   cv zk 
   cv service zkclient restart
+  cv_log "configure sync ntp"
   cv ntp
   cv service cron restart
-  cv service devagent restart
+  cv_log "restart devagentd"
+  cv service devagentd restart
   sleep 3
+  cv_log "check all service"
   cv service 
 }
 cv_setup_cvm(){
-  ./cv_setup_cvm
+  ./cv-setup-cvm
 }
 
 arg=$1

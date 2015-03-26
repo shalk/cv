@@ -12,7 +12,7 @@ then
     ntpip=$tmpip
 fi
 echo $ntpip
-cat > /etc/contab << EOF
+cat > /etc/crontab << EOF
 SHELL=/bin/sh
 PATH=/usr/bin:/usr/sbin:/sbin:/bin:/usr/lib/news/bin
 MAILTO=root
@@ -23,3 +23,4 @@ MAILTO=root
 0 0-23/1 * * *  root  /usr/sbin/sntp -P no -r $ntpip; /sbin/hwclock -w >& /dev/null
 
 EOF
+
