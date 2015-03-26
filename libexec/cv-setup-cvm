@@ -1,0 +1,6 @@
+#!/usr/bin/env bash 
+
+cd `dirname $0`
+source ../vcell.cfg
+
+bash $cvm_autorun_script 
