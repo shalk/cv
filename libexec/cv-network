@@ -17,6 +17,34 @@ biz : $biz
 stor : $stor
 EOF
 
+cat > internalport-biz-tag << EOF
+INTERNAL_PORT_INTERFACETYPE="ovs-internal-port"
+INTERNAL_PORT_PORTNAME="biz-tag"
+INTERNAL_PORT_BRIDGE="biz"
+INTERNAL_PORT_VLANTAG="$biz_vlan"
+INTERNAL_PORT_IPADDR=""
+INTERNAL_PORT_MAC=""
+EOF
+
+cat > internalport-mgmt-tag  <<EOF
+INTERNAL_PORT_INTERFACETYPE="ovs-internal-port"
+INTERNAL_PORT_PORTNAME="mgmt-tag"
+INTERNAL_PORT_BRIDGE="mgmt"
+INTERNAL_PORT_VLANTAG="$mgmt_vlan"
+INTERNAL_PORT_IPADDR=""
+INTERNAL_PORT_MAC=""
+EOF
+
+cat > internalport-stor-tag <<EOF
+INTERNAL_PORT_INTERFACETYPE="ovs-internal-port"
+INTERNAL_PORT_PORTNAME="stor-tag"
+INTERNAL_PORT_BRIDGE="stor"
+INTERNAL_PORT_VLANTAG="$stor_vlan"
+INTERNAL_PORT_IPADDR=""
+INTERNAL_PORT_MAC=""
+EOF
+
+
 if [ X"$1" == X"init" ]
 then
     ../other/hyper_init_net.py &

@@ -11,9 +11,10 @@ Usage:
 Example:
     cv setup vcell
     cv setup cvm
-
+    cv delete cvm
 Command:
     setup   : setup cvm and vcell
+    delete  : delete cvm
 
     zk      : configure zkclient.xml
     ntp     : configure crontab for time sync
@@ -22,6 +23,7 @@ Command:
     service : check service status( host-agent,devagentd ,storage-agent,zkclient,collet-agent,ntp)
 
     storage : 
+    
     usage   : display usage
     version : display version
 

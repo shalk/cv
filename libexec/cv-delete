@@ -20,7 +20,7 @@ arg=$1
 
 case $arg in 
     cvm)
-    echo      cv_setup_cvm 
+        cv_delete_cvm 
      ;;
      *)
      echo "
