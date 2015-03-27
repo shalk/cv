@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+# Usage: cv completions <command> [arg1 arg2...]
+
+set -e
+[ -n "$cv_DEBUG" ] && set -x
+
+COMMAND="$1"
+#if [ -z "$COMMAND" ]; then
+#  cv-help --usage completions >&2
+#  exit 1
+#fi
+
+COMMAND_PATH="$(command -v "cv-$COMMAND" || command -v "cv-sh-$COMMAND")"
+if grep -i "^\([#%]\|--\|//\) provide cv completions" "$COMMAND_PATH" >/dev/null; then
+  shift
+  exec "$COMMAND_PATH" --complete "$@"
+fi

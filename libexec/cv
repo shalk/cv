@@ -1,15 +1,16 @@
 #!/usr/bin/env bash
-
+#set -x
 tmppwd=`pwd`
+programname="$0"
+while [[ -L $programname ]]
+do
+    cd `dirname $programname`
+    name=$programname
+    programname=$(readlink $name)
+done
+cd $(dirname $programname)
 
-if [[ -L $0 ]]
-then
-    cd $(dirname $(readlink $0))
-else
-    cd $(dirname $0)
-fi
-
-if [ !  -f /opt/cv/vcell.cfg ] && [ ! -f vcell.cfg ]
+if [ !  -f /opt/cv/vcell.cfg ] && [ ! -f ../vcell.cfg ]
 then
     echo "/opt/cv/vcell.cfg is not exists!"
     exit 1
@@ -20,7 +21,7 @@ dos2unix /opt/cv/vcell.cfg >& /dev/null
 cv_command(){
   local arg_name=$1 
   shift  
-  ./libexec/cv-$arg_name "$@"
+  ./cv-$arg_name "$@"
 }
 
 if [[ $# == 0 ]]
@@ -31,7 +32,7 @@ fi
 
 
 var=$1
-if [[ !  -f "./libexec/cv-$var" ]]
+if [[ !  -f "./cv-$var" ]]
 then
     cv_command usage  | less
     exit 1

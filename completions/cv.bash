@@ -1,3 +1,4 @@
+#set -x
 _cv() {
   COMPREPLY=()
   local word="${COMP_WORDS[COMP_CWORD]}"

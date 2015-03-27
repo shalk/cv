@@ -1,7 +1,7 @@
 Summary:    cloudview configure tool 
 Name:       cv
 Version:    1.0
-Release:    20150326
+Release:    20150327
 License:    GPL
 Packager:   shalk
 Source:     cv-1.0.tar.gz
@@ -24,6 +24,6 @@ cp -dpr * %{buildroot}/opt/cv/
 /opt/cv/*
 %post
 rm /usr/local/bin/cv  >& /dev/null 
-ln -s   /opt/cv/cv /usr/local/bin/cv 
+ln -s   /opt/cv//bin/cv /usr/local/bin/cv 
 mkdir -p /cloudview/cv/spool/import
 mkdir -p /cloudview/cv/spool/iso
