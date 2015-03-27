@@ -24,6 +24,6 @@ cp -dpr * %{buildroot}/opt/cv/
 /opt/cv/*
 %post
 rm /usr/local/bin/cv  >& /dev/null 
-ln -s   /opt/cv//bin/cv /usr/local/bin/cv 
+ln -s   /opt/cv/bin/cv /usr/local/bin/cv 
 mkdir -p /cloudview/cv/spool/import
 mkdir -p /cloudview/cv/spool/iso
