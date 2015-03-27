@@ -5,7 +5,7 @@ programname="$0"
 while [[ -L $programname ]]
 do
     cd `dirname $programname`
-    name=$programname
+    name=`basename $programname`
     programname=$(readlink $name)
 done
 cd $(dirname $programname)

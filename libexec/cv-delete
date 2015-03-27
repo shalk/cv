@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+# 
+# Summary: 
+# 
+# Usage: cv  delete cvm 
+#   
+
+cd `dirname $0`
+
+#source ../vcell.cfg
+#source ./function
+
+cv_delete_cvm(){
+    xm destroy cvm-vm
+    sleep 3
+    xm delete cvm-vm
+}
+
+arg=$1
+
+case $arg in 
+    cvm)
+    echo      cv_setup_cvm 
+     ;;
+     *)
+     echo "
+Usage: cv  delete cvm 
+     "
+     ;;
+esac
