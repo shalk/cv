@@ -1,0 +1,26 @@
+#!/bin/bash
+cd `dirname $0`
+
+source ../vcell.cfg
+source ./function
+
+old /etc/samba/smb.conf
+mkdir -p /cloudview/cv/spool/iso/ 
+chmod 777 /cloudview/cv/spool/iso/
+rcsmb restart
+chkconfig smb on  >& /dev/null
+cat > /etc/samba/smb.conf << EOF
+[global]
+    workgroup = WORKGROUP
+    netbios name = samba
+    security = share
+    load printers   = no
+[iso]
+    path = /cloudview/cv/spool/iso/
+    comment = "iso directory"
+    writable = yes
+    create mode = 0666
+    directory mode = 0775
+    browseable = yes
+    guest ok =yes
+EOF
