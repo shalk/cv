@@ -7,7 +7,6 @@ source ./function
 old /etc/samba/smb.conf
 mkdir -p /cloudview/cv/spool/iso/ 
 chmod 777 /cloudview/cv/spool/iso/
-rcsmb restart
 chkconfig smb on  >& /dev/null
 cat > /etc/samba/smb.conf << EOF
 [global]
@@ -24,3 +23,5 @@ cat > /etc/samba/smb.conf << EOF
     browseable = yes
     guest ok =yes
 EOF
+
+rcsmb restart
