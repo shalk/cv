@@ -7,6 +7,9 @@ source ./function
 old /etc/samba/smb.conf
 mkdir -p /cloudview/cv/spool/iso/ 
 chmod 777 /cloudview/cv/spool/iso/
+mkdir -p /root/vhd
+chmod 777 /root/vhd
+
 chkconfig smb on  >& /dev/null
 cat > /etc/samba/smb.conf << EOF
 [global]
@@ -17,6 +20,14 @@ cat > /etc/samba/smb.conf << EOF
 [iso]
     path = /cloudview/cv/spool/iso/
     comment = "iso directory"
+    writable = yes
+    create mode = 0666
+    directory mode = 0775
+    browseable = yes
+    guest ok =yes
+[vhd]
+    path = /root/vhd/
+    comment = "vhd directory"
     writable = yes
     create mode = 0666
     directory mode = 0775

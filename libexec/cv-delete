@@ -13,7 +13,7 @@ cd `dirname $0`
 cv_delete_cvm(){
     xm destroy cvm-vm
     sleep 3
-    xm delete cvm-vm
+    xm delete cvm-vm >& /dev/null
 }
 
 arg=$1

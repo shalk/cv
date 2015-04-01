@@ -3,4 +3,41 @@
 cd `dirname $0`
 source ../vcell.cfg
 mkdir -p $cvmpath
-bash $cvm_autorun_script 
+cv_setup_cvm_check_vhd(){
+    local ret=0
+    local vhdname=""
+    if [ ! -f $cvm_autorun_script ]
+    then
+        echo "$cvm_autorun_script is not exists!"
+        ((ret++)) 
+    fi
+
+    vhdname="cloudview1.8.vhd" 
+    if [ ! -f $cv_vhd_dir/$vhdname ]
+    then
+        echo $cv_vhd_dir/$vhdname is not exists ! 
+        ((ret++))
+    fi
+
+    vhdname="vrouter_template_first.vhd" 
+    if [ ! -f $cv_vhd_dir/$vhdname ]
+    then
+        echo $cv_vhd_dir/$vhdname is not exists ! 
+        ((ret++))
+    fi
+
+    vhdname="vrouter_template.vhd"
+    if [ ! -f $cv_vhd_dir/$vhdname ]
+    then
+        echo $cv_vhd_dir/$vhdname is not exists ! 
+        ((ret++))
+    fi
+    return $ret
+}
+cv_setup_cvm_check_vhd
+if [ $? != 0 ]
+then
+    exit 1
+fi
+
+#bash $cvm_autorun_script 

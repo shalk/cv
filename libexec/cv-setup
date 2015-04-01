@@ -12,8 +12,12 @@ cd `dirname $0`
 
 source ../vcell.cfg
 source ./function
+cv_setup_vcell_check_param(){
+    echo 
+}
 
 cv_setup_vcell () {
+  
   cv_log "configure host"
   cv host    
   cv service host-agent restart
@@ -31,6 +35,7 @@ cv_setup_vcell () {
   cv_log "check all service"
   cv service 
 }
+
 cv_setup_cvm(){
   ./cv-setup-cvm
 }

@@ -22,6 +22,7 @@ cv_check_ip(){
     done
     return 0
 }
+
 cv_log(){
     echo "[INFO]" "$@"
 }
