@@ -67,7 +67,7 @@ cv_check_vlan_not_repeat(){
     do
         for ((j=i+1; j < INDEX ; j++ ))
         do
-            echo i:$i j:$j
+#            echo i:$i j:$j
             a=${arr[$i]}
             b=${arr[$j]}
             if [ $a -eq $b ]

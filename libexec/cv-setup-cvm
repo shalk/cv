@@ -9,7 +9,7 @@ cv_setup_cvm_check_param(){
     local vhdname=""
     
     vlan=$biz_ext_vlan
-    if [ $biz_ext_vlan >= 4096 ] || [  $biz_ext_vlan < 0 ]
+    if [ $biz_ext_vlan -gt 4096 ] || [  $biz_ext_vlan -lt 0 ]
     then
         echo "biz vlan($biz_vlan) should be  0~4095"        
         ((ret++))
