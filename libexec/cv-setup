@@ -10,30 +10,11 @@
 #
 cd `dirname $0`
 
-source ../vcell.cfg
-source ./function
-cv_setup_vcell_check_param(){
-    echo 
-}
+#source ../vcell.cfg
+#source ./function
 
 cv_setup_vcell () {
-  
-  cv_log "configure host"
-  cv host    
-  cv service host-agent restart
-  cv_log "configure network"
-  cv network 
-  cv_log "configure zk"
-  cv zk 
-  cv service zkclient restart
-  cv_log "configure sync ntp"
-  cv ntp
-  cv service cron restart
-  cv_log "restart devagentd"
-  cv service devagentd restart
-  sleep 3
-  cv_log "check all service"
-  cv service 
+  ./cv-setup-vcell  
 }
 
 cv_setup_cvm(){

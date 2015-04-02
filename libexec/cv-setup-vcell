@@ -1,0 +1,102 @@
+#!/usr/bin/env bash
+cd `dirname $0`
+
+source ../vcell.cfg
+source ./function
+
+cv_setup_vcell_check_param(){
+   
+    local ret=0
+    local eth=''
+    local vlan=''
+
+    eth=$stor
+    if [ ! -L "/sys/class/net/$stor" ]
+    then
+        echo "ethernet interface($stor) is not exists!"
+        ((ret++))
+    fi
+
+    eth=$biz
+    if [ ! -L "/sys/class/net/$biz" ]
+    then
+        echo "ethernet interface($biz) is not exists!"
+        ((ret++))
+    fi
+
+    eth=$mgmt
+    if [ ! -L "/sys/class/net/$mgmt" ]
+    then
+        echo "ethernet interface($mgmt) is not exists!"
+        ((ret++))
+    fi
+
+    vlan=$stor_vlan
+    if [ $stor_vlan -gt 4096 ] || [  $stor_vlan -lt 0 ]
+    then
+        echo "stor vlan($stor_vlan) should be  0~4095"        
+        ((ret++))
+    fi
+
+    vlan=$mgmt_vlan
+    if [ $mgmt_vlan -gt 4096 ] || [  $mgmt_vlan -lt 0 ]
+    then
+        echo "mgmt vlan($stor_vlan) should be  0~4095"        
+        ((ret++))
+    fi
+    
+    vlan=$biz_vlan
+    if [ $biz_vlan -gt 4096 ] || [  $biz_vlan -lt 0 ]
+    then
+        echo "biz vlan($biz_vlan) should be  0~4095"        
+        ((ret++))
+    fi
+    
+    cv_check_vlan_not_repeat $biz_vlan $mgmt_vlan $stor_vlan $biz_ext_vlan
+    if [ $? -ne 0 ]
+    then
+        echo "vlan( $biz_vlan $mgmt_vlan $stor_vlan $biz_ext_vlan ) shoud not repeat!"
+        ((ret++))
+    fi
+
+    cv_check_ip $ntpip
+    if [ $? -ne 0 ]
+    then
+        echo "ip($ntpip) is not valid ip"
+        ((ret++))
+    fi
+    cv_check_zkip $zkip
+    if [ $? -ne 0 ]
+    then
+        echo "zkip($zkip) is not valid ip"
+        echo "zkip format should be ip:2181  or  ip1:2181,ip2:2181,ip3:2181"
+        ((ret++))
+    fi
+    return $ret
+}
+
+cv_setup_vcell_check_param
+if [ $? -ne 0 ]
+then
+    echo "配置错误，请执行cv config 重新配置"
+    echo "配置正确后，执行cv setup vcell"
+    exit 1
+fi
+
+cv_log "configure host"
+cv host    
+cv service host-agent restart
+cv_log "configure network"
+cv network 
+cv_log "configure zk"
+cv zk 
+cv service zkclient restart
+cv_log "configure sync ntp"
+cv ntp
+cv service cron restart
+cv_log "restart devagentd"
+cv service devagentd restart
+sleep 3
+cv_log "check all service"
+cv service 
+

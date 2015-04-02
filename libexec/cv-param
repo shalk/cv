@@ -1,6 +1,23 @@
 #!/usr/bin/env perl
 # Summary  : check parameter for each module
 #
+my %hash {
+    "stor" =>  \&cv_network_nic;
+    "stor_vlan" => \&cv_network_vlan;
+    "biz" =>  \&cv_network_nic;
+    "biz_vlan" =>  \&cv_network_vlan;
+    "mgmt" => \&cv_network_nic;
+    "mgmt_vlan" =>  \&cv_network_vlan;
+    "biz_ext_vlan" =>  \&cv_network_vlan;
+    "zkip" => \&cv_zk_ip
+    "ntpip" => \&cv_check_ip
+
+    "cvmip" => \&cv_check_ip
+    "cvm_gateway" => \&cv_check_ip
+    "cvm_autorun_script" => \&cv_check_file
+    "cvmpath" => \&cv
+    "cv_vhd_dir" => "/root/vhd"
+}
 
 sub cv_network_vlan{
     my $vlan = shift;
@@ -37,6 +54,5 @@ sub cv_zk_zkip{
 
 sub cv_zk_ntpip{
 }
-
 
 

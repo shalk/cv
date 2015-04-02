@@ -2,10 +2,44 @@
 
 cd `dirname $0`
 source ../vcell.cfg
+source ./function
 mkdir -p $cvmpath
-cv_setup_cvm_check_vhd(){
+cv_setup_cvm_check_param(){
     local ret=0
     local vhdname=""
+    
+    vlan=$biz_ext_vlan
+    if [ $biz_ext_vlan >= 4096 ] || [  $biz_ext_vlan < 0 ]
+    then
+        echo "biz vlan($biz_vlan) should be  0~4095"        
+        ((ret++))
+    fi
+
+    cv_check_ip $cvmip
+    if [ $? -ne 0 ]
+    then
+        echo "ip($cvmip) is not valid ip"
+        ((ret++))
+    fi
+
+    cv_check_ip $cvm_gateway
+    if [ $? -ne 0 ]
+    then
+        echo "ip($cvm_gateway) is not valid ip"
+        ((ret++))
+    fi
+
+    if [ ! -d $cv_vhd_dir ]
+    then
+        echo "directory($cv_vhd_dir) is not exists!"
+        ((ret++))
+    fi
+    if [ ! -d $cvmpath ]
+    then
+        echo "directory($cvmpath) is not exists!"
+        ((ret++))
+    fi
+
     if [ ! -f $cvm_autorun_script ]
     then
         echo "$cvm_autorun_script is not exists!"
@@ -34,10 +68,12 @@ cv_setup_cvm_check_vhd(){
     fi
     return $ret
 }
-cv_setup_cvm_check_vhd
-if [ $? != 0 ]
+cv_setup_cvm_check_param
+if [ $? -ne 0 ]
 then
+    echo "配置错误，请执行cv config 重新配置或确认文件和目录都存在。"
+    echo "配置正确后，执行cv setup cvm"
     exit 1
 fi
 
-#bash $cvm_autorun_script 
+bash $cvm_autorun_script 

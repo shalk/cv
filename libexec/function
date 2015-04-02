@@ -23,6 +23,63 @@ cv_check_ip(){
     return 0
 }
 
+cv_check_single_zkip(){
+    local zksingleip=$1
+    local ipaddr=`echo $zksingleip | awk -F: '{print \$1}'`
+    local port=`echo $zksingleip | awk -F: '{print \$2}'`
+    local ret=0
+    cv_check_ip $ipaddr
+    if [ $? -ne 0 ]
+    then
+        echo "ip($ipaddr) is not valid"
+        ((ret++))
+    fi
+    if [[ X"$port" != X"2181" ]]
+    then
+        echo "port($port) should be 2181"
+        ((ret++))
+    fi
+    return $ret
+}
+
+cv_check_zkip(){
+    local zkipaddr=$1
+    local ret=0
+    OLDIFS=$IFS
+    IFS=,
+    declare -a zklist=$(echo $zkipaddr) 
+    IFS=$OLDIFS
+    for i in $zklist
+    do
+        cv_check_single_zkip  $i
+        if [ $? -ne 0 ]
+        then
+            ((ret++))
+        fi
+    done
+    return $ret
+}  
+cv_check_vlan_not_repeat(){
+    local ret=0
+    declare -a arr=($1 $2 $3 $4)
+    INDEX=4
+    for((i=0;i < INDEX; i++))
+    do
+        for ((j=i+1; j < INDEX ; j++ ))
+        do
+            echo i:$i j:$j
+            a=${arr[$i]}
+            b=${arr[$j]}
+            if [ $a -eq $b ]
+            then
+                ((ret++)) 
+                break 2
+            fi
+        done
+    done
+    return $ret
+}
+
 cv_log(){
     echo "[INFO]" "$@"
 }

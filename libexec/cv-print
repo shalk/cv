@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+
+cv_print_vcell_cfg(){
+vcell_cfg_filelist=('/usr/local/etc/devagent/vlan-conf' '/usr/local/etc/devagent/nic-conf' '/opt/collect-agent/etc/collector/conf/agent_prop.properties' '/opt/collect-agent/etc/collector/conf/mq_prop.properties' '/opt/zkclient/share/zkclient.xml')
+for file in ${vcell_cfg_filelist[@]}
+do
+    echo "##############START#############"
+    echo "cat $file"
+    cat $file
+    echo "################END##############"
+    echo
+done
+}
+cv_print_cvm_cfg(){
+local tmpdir='/opt/cvm-install/cvm-cfg';
+cvm_cfg_filelist=('cloudview.zookeeper.cluster.cfg' 'storage.cfg' 'network.service.layertwo.reservedVlanNo.cfg' 'network.service.layertwo.reservedVlanNo' 'network.service.networkdomain.networkDomain.cfg' ) 
+for file in ${cvm_cfg_filelist[@]}
+do
+    echo "##############START#############"
+    echo "cat $file"
+    cat $file
+    echo "################END##############"
+    echo
+done
+}
+cv_print_usage(){
+   echo "
+    Usage: cv print [vcell|cvm]
+    "
+}
+case $1 in
+    vcell)
+    cv_print_vcell_cfg
+    ;;
+    cvm)
+    cv_print_cvm_cfg
+    ;;
+    *)
+    cv_print_usage
+    ;;
+esac
+
+
+

@@ -12,9 +12,13 @@ Example:
     cv setup vcell
     cv setup cvm
     cv delete cvm
+
+    cv print vcell
+    cv print cvm
 Command:
     setup   : setup cvm and vcell
     delete  : delete cvm
+    print   : print cvm or vcell configure file
 
     zk      : configure zkclient.xml
     ntp     : configure crontab for time sync
