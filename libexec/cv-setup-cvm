@@ -18,25 +18,59 @@ cv_setup_cvm_check_param(){
     cv_check_ip $cvmip
     if [ $? -ne 0 ]
     then
-        echo "ip($cvmip) is not valid ip"
+        echo "cvm mgmt ip($cvmip) is not valid ip"
         ((ret++))
     fi
 
     cv_check_ip $cvm_gateway
     if [ $? -ne 0 ]
     then
-        echo "ip($cvm_gateway) is not valid ip"
+        echo "cvm gateway ip($cvm_gateway) is not valid ip"
         ((ret++))
     fi
+    
+    if [ -n "$cvm_biz_novlan_ip" ]
+    then
+        cv_check_ip $cvm_biz_novlan_ip
+        if [ $? -ne 0 ]
+        then
+            echo "cvm_biz_novlan_ip($cvm_biz_novlan_ip) is not valid ip"
+            ((ret++))
+        fi
+         cv_check_ip $cvm_biz_novlan_netmask
+        if [ $? -ne 0 ]
+        then
+            echo "cvm_biz_novlan_netmask($cvm_biz_novlan_netmask) is not valid ip"
+            ((ret++))
+        fi
+    fi
+
+
+    if [ -n "$cvm_biz_vlan_ip" ]
+    then
+        cv_check_ip $cvm_biz_vlan_ip
+        if [ $? -ne 0 ]
+        then
+            echo "cvm_biz_vlan_ip($cvm_biz_vlan_ip) is not valid ip"
+            ((ret++))
+        fi
+        cv_check_ip $cvm_biz_vlan_netmask
+        if [ $? -ne 0 ]
+        then
+            echo "cvm_biz_vlan_netmask($cvm_biz_vlan_netmask) is not valid ip"
+            ((ret++))
+        fi
+    fi
+
 
     if [ ! -d $cv_vhd_dir ]
     then
-        echo "directory($cv_vhd_dir) is not exists!"
+        echo "directory cv_vhd_dir($cv_vhd_dir) is not exists!"
         ((ret++))
     fi
     if [ ! -d $cvmpath ]
     then
-        echo "directory($cvmpath) is not exists!"
+        echo "directoryi cvmpath($cvmpath) is not exists!"
         ((ret++))
     fi
 

@@ -9,6 +9,7 @@ mkdir -p /cloudview/cv/spool/iso/
 chmod 777 /cloudview/cv/spool/iso/
 mkdir -p /root/vhd
 chmod 777 /root/vhd
+chmod 755 /root/
 
 chkconfig smb on  >& /dev/null
 cat > /etc/samba/smb.conf << EOF
