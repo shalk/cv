@@ -2,7 +2,10 @@
 cd `dirname $0`
 
 source ../vcell.cfg
+source ../conf/vcell_extent.cfg
 source ./function
+
+
 
 cv_setup_vcell_check_param(){
    
@@ -32,26 +35,33 @@ cv_setup_vcell_check_param(){
     fi
 
     vlan=$stor_vlan
-    if [ $stor_vlan -gt 4096 ] || [  $stor_vlan -lt 0 ]
+    if [ $stor_vlan -gt 4090 ] || [  $stor_vlan -lt 2 ]
     then
-        echo "stor vlan($stor_vlan) should be  0~4095"        
+        echo "stor vlan($stor_vlan) should be  2~4090"        
         ((ret++))
     fi
 
     vlan=$mgmt_vlan
-    if [ $mgmt_vlan -gt 4096 ] || [  $mgmt_vlan -lt 0 ]
+    if [ $mgmt_vlan -gt 4090 ] || [  $mgmt_vlan -lt 2 ]
     then
-        echo "mgmt vlan($stor_vlan) should be  0~4095"        
+        echo "mgmt vlan($stor_vlan) should be  2~4090"        
         ((ret++))
     fi
     
     vlan=$biz_vlan
-    if [ $biz_vlan -gt 4096 ] || [  $biz_vlan -lt 0 ]
+    if [ $biz_vlan -gt 4090 ] || [  $biz_vlan -lt 2 ]
     then
-        echo "biz vlan($biz_vlan) should be  0~4095"        
+        echo "biz vlan($biz_vlan) should be  2~4090"        
         ((ret++))
     fi
     
+    vlan=$biz_ext_vlan
+    if [  $biz_ext_vlan -ne 0 ]
+    then
+        echo "biz external vlan($biz_ext_vlan) should be  0"        
+        ((ret++))
+    fi
+
     cv_check_vlan_not_repeat $biz_vlan $mgmt_vlan $stor_vlan $biz_ext_vlan
     if [ $? -ne 0 ]
     then

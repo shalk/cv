@@ -2,6 +2,7 @@
 
 cd `dirname $0`
 
+cv_ocfs_usage(){
 echo "
 #USER GUIDE#
 step1:
@@ -16,7 +17,7 @@ step3:
     o2cb add-node --ip 192.168.199.2 --number 1 ocfs2 node2
 
 step4:
-    mkfs.ocfs2 -b 4K -C 4K -J size=4M -N 4 -L cluster_heart --cluster-name=ocfs2 --cluster-stack=o2cb --global-heartbeat /dev/sdb
+    mkfs.ocfs2 -b 4K -C 4K -J size=4M -N 10 -L cluster_heart --cluster-name=ocfs2 --cluster-stack=o2cb --global-heartbeat /dev/sdb
 
 step5:
     mounted.ocfs2 -d
@@ -44,4 +45,5 @@ step12
     mkfs.ocfs2 -T vmstore /dev/mapper/data
 
 "
-
+}
+cv_ocfs_usage

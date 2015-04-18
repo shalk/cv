@@ -13,7 +13,7 @@ done
 }
 cv_print_cvm_cfg(){
 local tmpdir='/opt/cvm-install/cvm-cfg';
-cvm_cfg_filelist=('cloudview.zookeeper.cluster.cfg' 'storage.cfg'  'network.service.layertwo.reservedVlanNo' 'network.service.networkdomain.networkDomain.cfg' ) 
+cvm_cfg_filelist=('cloudview.zookeeper.cluster.cfg' 'storage.cfg'  'network.service.layertwo.reservedVlanNo' 'network.service.networkdomain.networkDomain' ) 
 for file in ${cvm_cfg_filelist[@]}
 do
     echo "##############START#############"

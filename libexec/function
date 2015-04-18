@@ -83,3 +83,6 @@ cv_check_vlan_not_repeat(){
 cv_log(){
     echo "[INFO]" "$@"
 }
+cv_err(){
+    echo "[ERROR]" "$@"
+}

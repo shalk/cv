@@ -1,0 +1,13 @@
+#!/bin/bash
+
+
+if [  -z "$1" ]
+then
+    echo "cv error need parameter" 
+    echo "egg: cv error 1"
+fi
+
+#cv_err_code=$1
+#case $cv_err_code in 
+#    1001)
+#    echo "$"

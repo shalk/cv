@@ -3,6 +3,7 @@ cd `dirname $0`
 
 source ../vcell.cfg
 source ./function
+
 tmpip=$1
 cv_check_ip $tmpip
 

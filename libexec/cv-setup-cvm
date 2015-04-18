@@ -2,6 +2,7 @@
 
 cd `dirname $0`
 source ../vcell.cfg
+source ../conf/vcell_extent.cfg
 source ./function
 mkdir -p $cvmpath
 cv_setup_cvm_check_param(){
