@@ -72,7 +72,7 @@ cv_setup_vcell_check_param(){
     cv_check_ip $ntpip
     if [ $? -ne 0 ]
     then
-        echo "ip($ntpip) is not valid ip"
+        echo "ntpip($ntpip) is not valid ip"
         ((ret++))
     fi
     cv_check_zkip $zkip

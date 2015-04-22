@@ -8,7 +8,8 @@ mkdir -p $cvmpath
 cv_setup_cvm_check_param(){
     local ret=0
     local vhdname=""
-    
+   
+
     vlan=$biz_ext_vlan
     if [ $biz_ext_vlan -gt 4096 ] || [  $biz_ext_vlan -lt 0 ]
     then
@@ -103,6 +104,88 @@ cv_setup_cvm_check_param(){
     fi
     return $ret
 }
+
+cv_setup_cvm_check_env(){
+
+    local ret=0
+    local cv_env_kernelname=`uname -r| grep xen` 
+    local cv_env_cvm_vhd_name=${cvmpath}/cloudview1.8.vhd
+    local cv_env_cvm_name="cvm-vm"
+    if [  -z "$cv_env_kernelname" ]
+    then
+       ((ret++)) 
+       echo 
+       echo "当前不是xen内核"
+       return $ret
+    fi
+    
+    local cv_xm_command=$(which xm)
+    if [ -z "$cv_xm_command" ]
+    then 
+        ((ret++))
+        echo 
+        echo "xm 命令不存在，xen-tools工具缺失"
+        echo "可能操作系统安装不完整，重新安装系统"
+        return $ret
+    fi
+
+    local cv_env_cvm_name=$(xm li | grep $cv_env_cvm_name )
+    if [ -n "$cv_env_cvm_name" ]
+    then
+        ((ret++))
+        echo
+        echo "cvm虚拟机已经存在!"
+        echo "删除执行(谨慎):cv delete cvm"
+        return $ret
+    fi
+    
+    local  cv_env_hvm=$(xm info | grep xen_caps | grep hvm)
+    if [ -z "$cv_env_hvm" ]
+    then
+        ((ret++))
+        echo 
+        echo "完全虚拟化没有开启"
+        echo "请检查bios设置，确认CPU开启虚拟化选项！"
+        echo "如果bios有问题，请升级bios！"
+    fi
+   
+    local  cv_env_cvm_vhd_info=$(lsof $cv_env_cvm_vhd_name  2>/dev/null)
+    #local  cv_env_cvm_vhd=$(lsof /sdc/cvm/install/cloudview1.8.vhd)
+   
+    if [ -n "$cv_env_cvm_vhd_info" ]
+    then
+        ((ret++))
+        echo 
+        echo "cvm安装位置中,$cv_env_cvm_vhd_name 文件已存在并且被占用"
+        echo "请关闭占用进程。"
+        echo "占用信息如下: "
+        echo "###############"
+        echo "$cv_env_cvm_vhd_info"
+        echo "###############"
+    fi
+
+    local  cv_env_root_disk=$(df -h | perl -lane 'if(@F[5] eq "/"){ print @F[4] } ' |  sed 's/%//')
+    if [ -n "$cv_env_root_disk" ]  && [  $cv_env_root_disk -gt 80 ]
+    then
+        ((ret++))
+        echo 
+        echo "目前/ 目录使用率为${cv_env_root_disk}%"
+        echo "告警：不要占满本地文件系统，系统将不能正确工作。" 
+    fi
+    return $ret
+#   1.检查同名虚拟机已经存在
+#   2.检查目标文件是否正在使用
+#   3.检查是否为xen环境
+#   4.检查是否开启虚拟化
+#   5.检查目录空间是否足够
+}
+
+cv_setup_cvm_check_env
+if [ $? -ne 0 ]
+then
+    echo "环境条件不满足，请满足条件后，再进行安装"
+    exit 1
+fi
 cv_setup_cvm_check_param
 if [ $? -ne 0 ]
 then

@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+cd `dirname $0`
+
+source ../vcell.cfg
+source ../conf/vcell_extent.cfg
+source ./function
+
+
+
+echo "
+
+stor=$stor
+stor_vlan=$stor_vlan
+biz=$biz
+biz_vlan=$biz_vlan
+mgmt=$mgmt
+mgmt_vlan=$mgmt_vlan
+
+cvmip=$cvmip
+cvm_netmask=$cvm_netmask
+cvm_gateway=$cvm_gateway
+cvm_biz_novlan_ip=$cvm_biz_novlan_ip
+cvm_biz_novlan_netmask=$cvm_biz_novlan_netmask
+cvm_biz_vlan_ip=$cvm_biz_vlan_ip
+cvm_biz_vlan_netmask=$cvm_biz_vlan_netmask
+
+zkip=$zkip
+ntpip=$ntpip
+
+cvmpath=$cvmpath
+cv_vhd_dir=$cv_vhd_dir
+
+cvm_autorun_script=$cvm_autorun_script
+biz_ext_vlan=$biz_ext_vlan
+
+"
